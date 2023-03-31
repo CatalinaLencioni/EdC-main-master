@@ -1,0 +1,114 @@
+import {DarkTheme, DefaultTheme, NavigationContainer} from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import NotFoundScreen from "../screens/NotFoundScreen";
+import BottomTabNavigator from "./BottomTabNavigator";
+import LinkingConfiguration from "./LinkingConfiguration";
+import PerfilScreen from "../screens/PerfilScreen";
+import EmpresaScreen from "../screens/EmpresaScreen";
+import MarcoLegalScreen from "../screens/MarcoLegalScreen";
+import BeneficiosScreen from "../screens/BeneficiosScreen";
+import InstructivoScreen from "../screens/InstructivoScreen";
+import BeneficiarioProvScreen from "../screens/BeneficiarioProvScreen";
+import RegimenScreen from "../screens/RegimenScreen";
+import InsValidScreen from "../screens/InsValidScreen";
+
+export default function Navigation({ colorScheme }) {
+  return (
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
+      <RootNavigator />
+    </NavigationContainer>
+  );
+}
+
+// A root stack navigator is often used for displaying modals on top of all other content
+// Read more here: https://reactnavigation.org/docs/modal
+const Stack = createStackNavigator();
+
+function RootNavigator() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{ title: "Oops!" }}
+      />
+      <Stack.Screen
+        name="PerfilScreen"
+        component={PerfilScreen}
+        options={{
+          headerShown: true,
+          title: "Perfil",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="EmpresaScreen"
+        component={EmpresaScreen}
+        options={{
+          headerShown: true,
+          title: "Empresas Cordobesas ",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="MarcoLegalScreen"
+        component={MarcoLegalScreen}
+        options={{
+          headerShown: true,
+          title: "Marco Legal ",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="BeneficiosScreen"
+        component={BeneficiosScreen}
+        options={{
+          headerShown: true,
+          title: "BeneficiosScreen ",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="InstructivoScreen"
+        component={InstructivoScreen}
+        options={{
+          headerShown: true,
+          title: "InstructivoScreen ",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="BeneficiarioProvScreen"
+        component={BeneficiarioProvScreen}
+        options={{
+          headerShown: true,
+          title: "BeneficiarioProvScreen ",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="RegimenScreen"
+        component={RegimenScreen}
+        options={{
+          headerShown: true,
+          title: "RegimenScreen ",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="InsValidScreen"
+        component={InsValidScreen}
+        options={{
+          headerShown: true,
+          title: "InsValidScreen ",
+          headerBackTitle: "Volver",
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
