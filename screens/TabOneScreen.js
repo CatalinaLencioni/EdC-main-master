@@ -1,41 +1,131 @@
-import { StyleSheet, TouchableOpacity, Image  } from "react-native";
+import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
 
 export default function TabOneScreen() {
   const navigation = useNavigation();
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
   const menuOptions = [
-    { name: "Perfil", icon: "md-person", onPress: () => navigation.navigate("PerfilScreen") },
-    { name: "Empresas EDC", icon: "md-business", onPress: () => navigation.navigate("EmpresaScreen") },
-    { name: "Marco Legal", icon: "md-document", onPress: () => navigation.navigate("MarcoLegalScreen") },
-    { name: "Beneficios", icon: "md-gift", onPress: () => navigation.navigate("BeneficiosScreen") },
-    { name: "Instructivo Recor Regimenes de Beneficio EdC", icon: "md-book", onPress: ()  => navigation.navigate("InstructivoScreen") },
-    { name: "Beneficiario Provisiorio", icon: "md-person-add", onPress: () => navigation.navigate("BeneficiarioProvScreen") },
-    { name: "Regimen EdC", icon: "md-clipboard", onPress: () => navigation.navigate("RegimenScreen") },
-    { name: "Instructivo de validación Recor", icon: "md-book", onPress: () => navigation.navigate("InsValidScreen") },
+    {
+      name: "Perfil",
+      icon: "person-sharp",
+      onPress: () => navigation.navigate("PerfilScreen"),
+    },
+    {
+      name: "Empresas EDC",
+      icon: "md-business",
+      onPress: () => navigation.navigate("EmpresaScreen"),
+    },
+    {
+      name: "Marco Legal",
+      icon: "documents",
+      onPress: () => navigation.navigate("MarcoLegalScreen"),
+    },
+    {
+      name: "Beneficios",
+      icon: "card",
+      onPress: () => navigation.navigate("MarcoLegalScreen"),
+    },
+    {
+      name: "Noticias",
+      icon: "newspaper",
+      onPress: () => navigation.navigate("InsValidScreen"),
+    },
+    {
+      name: "Instructivos y PDFs",
+      icon: "document-attach",
+      subMenu: [
+        {
+          name: "Régimen de beneficiarios EDC",
+          icon: "reader",
+          onPress: () => navigation.navigate("InsValidScreen"),
+        },
+        {
+          name: "Revalidación RECOR",
+          icon: "duplicate",
+          onPress: () => navigation.navigate("InsValidScreen"),
+        },
+        {
+          name: "Beneficiario Provisorio",
+          icon: "book",
+          onPress: () => navigation.navigate("InsValidScreen"),
+        },
+        {
+          name: "Programa Empleo",
+          icon: "clipboard",
+          onPress: () => navigation.navigate("InsValidScreen"),
+        },
+        {
+          name: "Preguntas Frecuentes",
+          icon: "help-circle",
+          onPress: () => navigation.navigate("PregFrecScreen"),
+        },
+      ],
+    },
   ];
 
-  const onPressMenuItem = (onPressFunction) => {
-    onPressFunction();
+  const onPressMenuItem = (onPressFunction, hasSubMenu) => {
+    if (onPressFunction) {
+      onPressFunction();
+    }
+    if (hasSubMenu) {
+      setIsSubMenuOpen(!isSubMenuOpen);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/landing.png')} style={styles.logo} />
-     
-      <View style={styles.menuContainer}>
-        {menuOptions.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => onPressMenuItem(item.onPress)}>
-            <View style={styles.menuItem}>
-              <Ionicons name={item.icon} size={24} color="black" style={styles.menuIcon} />
-              <Text style={styles.menuItemText}>{item.name}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </View>
+      <Image source={require("../assets/images/landing.png")} style={styles.logo} />
+      {menuOptions.map((item, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => onPressMenuItem(item.onPress, item.subMenu)}
+        >
+          <View style={styles.menuItem}>
+            <Ionicons
+              name={item.icon}
+              size={24}
+              color="black"
+              style={styles.menuIcon}
+              marginLeft="30"
+            />
+            <Text style={styles.menuItemText}>{item.name}</Text>
+            {item.subMenu && (
+              <Ionicons
+                name={isSubMenuOpen ? "md-chevron-up" : "md-chevron-down"}
+                size={24}
+                color="black"
+                style={styles.menuIcon}
+              />
+            )}
+          </View>
+        </TouchableOpacity>
+      ))}
+      {isSubMenuOpen && (
+        <View style={styles.subMenu}>
+          {menuOptions
+            .find((item) => item.name === "Instructivos y PDFs")
+            .subMenu.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => onPressMenuItem(item.onPress)}>
+                <View style={styles.subMenuItem}>
+                  <Ionicons
+                    name={item.icon}
+                    size={24}
+                    color="black"
+                    style={styles.menuIcon}            
+                  />
+                  <Text style={styles.subMenuItemText}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+        </View>
+      )}
 
       <EditScreenInfo path="/screens/TabOneScreen.tsx" />
     </View>
@@ -46,8 +136,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
+    flexDirection: "column",
+    marginLeft: 30, // agregando margen en el lado derecho del 
   },
   header: {
     flexDirection: "row",
@@ -65,33 +157,43 @@ const styles = StyleSheet.create({
     height: 1,
     width: "80%",
   },
+  menuContainer: {
+    flex: 1,
+    flexDirection: "column",
+    paddingVertical: 20,
+    alignItems: "flex-start",
+  },
   menuItem: {
     flexDirection: "row",
-    alignItems: "center",
     paddingVertical: 10,
+    alignItems: "center",
   },
   menuItemText: {
-    marginLeft: 15,
-    alignSelf: "flex-start",
+    marginLeft: 10,
   },
   menuOptionContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: "row", // Cambia la dirección a "column"
     paddingVertical: 15,
     marginBottom: 40,
   },
   menuIcon: {
-    marginRight: 10,
-    alignItems: "center",
+    marginRight: 5,
     justifyContent: "flex-start",
   },
-  menuText: {
+  subMenuItem: {
+    flexDirection: "row",
+    paddingVertical: 5,
+  },
+  subMenuItemText: {
+    marginLeft: 10,
     alignSelf: "flex-start",
-  },    
+  },
   logo: {
-  width: 900,
-  height: 150,
-  resizeMode: 'contain',
-  justifyContent: "center",
-},
+    width: 1000,
+    height: 180,
+    resizeMode: "contain",
+    marginBottom: 20,
+    alignSelf: "center"
+  },  
+  
 });

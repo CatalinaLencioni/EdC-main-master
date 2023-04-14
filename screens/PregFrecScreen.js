@@ -1,43 +1,35 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
+import { Linking } from "react-native";
+
+const handleDescargarPDF = () => {
+  const url = "https://mincyt.cba.gov.ar/wp-content/uploads/2022/11/PREGUNTAS-FRECUENTES-RECOR-1.pdf";
+  Linking.openURL(url);
+};
 
 export default function PregFrecScreen() {
-  const [consulta, setConsulta] = useState("");
-
-  const enviarConsulta = () => {
-    // Aquí podrías agregar la lógica para enviar la consulta
-    console.log("Consulta enviada:", consulta);
-
-    // Mostrar la alerta de confirmación
-    Alert.alert(
-      'Consulta enviada',
-      '¡Gracias por contactarnos!',
-      [{ text: 'OK', onPress: () => console.log('Alerta cerrada') }]
-    );
-
-    setConsulta("");
+  const handleDescargarPDF = () => {
+    console.log("Descargar PDF");
   };
-
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>¿Con que podemos ayudarte?</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      {/* Agregar el formulario */}
-      <TextInput
-        value={consulta}
-        onChangeText={setConsulta}
-        placeholder="Escribe tu consulta aquí"
-        style={styles.input}
-      />
-      <TouchableOpacity style={styles.button} onPress={enviarConsulta}>
-        <Text style={styles.buttonText}>Enviar</Text>
-      </TouchableOpacity>
+      <View style={styles.contentContainer}>
+        {/* Agregar el componente DescargaPDF */}
+        <View style={styles.pdfContainer}>
+          <Text style={styles.pdfText}>
+            Tenemos las respuestas a la mayoría de tus preguntas en este
+            documento:
+          </Text>
+          <TouchableOpacity
+            onPress={handleDescargarPDF}
+            style={styles.pdfButtonContainer}
+          >
+            <Text style={styles.pdfButton}>Descargar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 }
@@ -47,32 +39,29 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 20,
   },
-  title: {
-    fontSize: 20,
+  contentContainer: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  pdfContainer: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    marginTop: 20,
+  },
+  pdfText: {
+    fontSize: 16,
     fontWeight: "bold",
+    marginRight: 10,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  pdfButtonContainer: {
+    alignSelf: "flex-start",
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    padding: 10,
-    width: "80%",
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
+  pdfButton: {
+    color: "blue",
+    textDecorationLine: "underline",
   },
 });

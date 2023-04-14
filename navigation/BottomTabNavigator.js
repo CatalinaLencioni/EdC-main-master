@@ -33,8 +33,9 @@ export default function BottomTabNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-paper" color={color} />
-          ),
+            <TabBarIcon name="newspaper" color={color} />
+          ),        
+
         }}
       />
        <BottomTab.Screen
@@ -43,7 +44,7 @@ export default function BottomTabNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="person" color={color} />
+            <TabBarIcon name="person-sharp" color={color} />
           ),
         }}
       />

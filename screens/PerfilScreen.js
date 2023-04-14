@@ -1,100 +1,81 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Image, Button, FlatList } from 'react-native';
 import { FontAwesome } from 'react-native-vector-icons';
 
 export default function Container() {
-  const showCredentialsAlert = () => {
-    Alert.alert(
-      'Título del alert',
-      'Este es un mensaje de alerta.',
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => console.log('Alerta OK'),
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
-  useEffect(() => {
-    showCredentialsAlert();
-  }, []);
+  
+  const renderItem = ({ item }) => (
+    <TouchableOpacity style={styles.item}>
+      <Text style={styles.itemTitle}>{item.title}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <Text style={styles.profileName}>MACENA</Text>
+        <Image
+          source={require("../assets/images/macena.png")}
+          style={styles.productoRedondo}
+        />
+        <View style={styles.profileInfoContainer}>
+          <Text style={styles.profileName}>MACENA</Text>
+        </View>
       </View>
-      <TouchableOpacity style={styles.link}>
-        <Text style={styles.linkText}>Mostrar credenciales</Text>
-        <FontAwesome name="chevron-right" size={16} color="#0000ff" />
-      </TouchableOpacity>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Notificaciones</Text>
-      </View>
+
+      <Button
+        title={"Ver góndola"}
+        color={"transparent"}
+        onPress={() => Alert.alert("Completado", "Compra finalizada con exito")}
+        style={styles.button}
+      />
     </View>
   );
-}
-
+};
+  
 const styles = StyleSheet.create({
   container: {
+    flex: 0,
     backgroundColor: 'white',
-    margin: 20,
-    padding: -10,
-    borderRadius: 0
+    margin: 10,
+    padding: 20,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   profileContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 20,
   },
   profileName: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
+    marginLeft: 10,
   },
-  profileInfo: {
-    fontSize: 16,
-    color: 'gray',
-    marginBottom: 10,
-  },
-  link: {
-    marginTop: 20,
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  linkText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#0000ff',
-    textDecorationLine: 'underline',
-  },
-  titleContainer: {
-    backgroundColor: '#f2f2f2',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginTop: 30,
-  },
-  title: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: 'black',
+  profileInfoContainer: {
+    flex: 0,
+    marginLeft: 20,
   },
   button: {
     marginTop: 20,
-    backgroundColor: '#ff0000',
-    padding: 10,
-    borderRadius: 5,
+    borderWidth: 0,
+    width: 1,
+    height: 1,
   },
-  buttonText: {
-    color: 'white',
+  productoRedondo: {
+    backgroundColor: 'rgb(232,228,234)',
+    resizeMode: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 500,
+    borderColor: '#020202',
+    borderWidth: 3,
+  },
+  title: {
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginTop: 0,
   },
 });

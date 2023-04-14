@@ -24,7 +24,7 @@ export default function InstructivoScreen({ navigation }) {
   const toggleCollapse2 = () => {
     setIsCollapsed2(!isCollapsed2);
     Animated.timing(height2, {
-      toValue: isCollapsed2 ? 100 : 0, // adjust the height value to match your content
+      toValue: isCollapsed2 ? 300 : 0, // adjust the height value to match your content
       duration: 300, // adjust the duration as needed
       useNativeDriver: false, // set to true if using RN version 0.62 or higher
     }).start();
@@ -33,7 +33,7 @@ export default function InstructivoScreen({ navigation }) {
   const toggleCollapse3 = () => {
     setIsCollapsed3(!isCollapsed3);
     Animated.timing(height3, {
-      toValue: isCollapsed3 ? 100 : 0, // adjust the height value to match your content
+      toValue: isCollapsed3 ? 300 : 0, // adjust the height value to match your content
       duration: 300, // adjust the duration as needed
       useNativeDriver: false, // set to true if using RN version 0.62 or higher
     }).start();

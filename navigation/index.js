@@ -12,6 +12,7 @@ import InstructivoScreen from "../screens/InstructivoScreen";
 import BeneficiarioProvScreen from "../screens/BeneficiarioProvScreen";
 import RegimenScreen from "../screens/RegimenScreen";
 import InsValidScreen from "../screens/InsValidScreen";
+import PregFrecScreen from "../screens/PregFrecScreen";
 
 export default function Navigation({ colorScheme }) {
   return (
@@ -75,7 +76,7 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="InstructivoScreen"
-        component={InstructivoScreen}
+        component={InsValidScreen}
         options={{
           headerShown: true,
           title: "InstructivoScreen ",
@@ -84,7 +85,7 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="BeneficiarioProvScreen"
-        component={BeneficiarioProvScreen}
+        component={InsValidScreen}
         options={{
           headerShown: true,
           title: "BeneficiarioProvScreen ",
@@ -93,7 +94,7 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="RegimenScreen"
-        component={RegimenScreen}
+        component={InsValidScreen}
         options={{
           headerShown: true,
           title: "RegimenScreen ",
@@ -109,6 +110,16 @@ function RootNavigator() {
           headerBackTitle: "Volver",
         }}
       />
+       <Stack.Screen
+        name="PregFrecScreen"
+        component={PregFrecScreen}
+        options={{
+          headerShown: true,
+          title: "Preguntas Frecuentes ",
+          headerBackTitle: "Volver",
+        }}
+      />
     </Stack.Navigator>
+    
   );
 }
