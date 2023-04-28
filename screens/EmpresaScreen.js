@@ -1,116 +1,186 @@
-import React from "react";
-import {StyleSheet, TouchableOpacity, Image, View, Text, Linking} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Image, Button, FlatList, TouchableOpacity, Modal, Alert } from 'react-native';
+import { FontAwesome } from 'react-native-vector-icons';
 
- 
-export default function EmpresaScreen({ navigation }) {
-  const title =
-    "Las empresas cordobesas que forman parte de la Economía del Conocimiento, tienen acceso a los beneficios impositivos y estímulos a la creación de puestos de trabajo que prevé el Régimen Provincial de la Economía del Conocimiento de Córdoba. El conglomerado de Pymes y emprendimientos locales provienen de diversas actividades que producen servicios basados en el conocimiento o conocimiento embebidos en productos.";
-  const subtitle = "Ver 81 empresas adheridas";
 
-  const handleOpenLink = () => {
-    // Abre un enlace en el navegador cuando se hace clic en el botón
-    Linking.openURL(
-      "https://docs.google.com/spreadsheets/d/1lyf6CqgmGUD4aGs9BS3bC91fNRML-n3u9u5HZhlymVk/edit#gid=0"
-    );
-  };
+export default function Container() {
+  const [showCredentials, setShowCredentials] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const renderItem = ({ item }) => (
+    <TouchableOpacity style={styles.item}>
+      <Text style={styles.itemTitle}>{item.title}</Text>
+    </TouchableOpacity>
+  );
 
   return (
-    <ScrollView>
     <View style={styles.container}>
-      <Image
-        source={require("../assets/images/landing.png")}
-        style={styles.logo}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>Empresas cordobesas</Text>
-        <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity style={styles.buttonContainer} onPress={handleOpenLink} accessibilityRole="button">
-          <Ionicons name="arrow-forward-outline" size={24} color="blue" style={{ marginRight: 10 }}/>
-          <Text style={styles.buttonText}>
-            <Text style={[styles.subTitle, styles.blueText]}>{subtitle}</Text>
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.container}>
-      <Image
-        source={require("../assets/images/map.png")}
-        style={styles.map}
-      />
-      </View>  
+      <View style={styles.profileContainer}>
+      <View style={styles.container}>
+      <Image source={require("../assets/images/macena.png")} style={styles.productoRedondo}/>
+      <Button title={"Ver góndola"} color={"transparent"} onPress={() => Alert.alert("Completado", "Compra finalizada con éxito")} style={styles.button} />
+       </View>
+        <View style={styles.profileInfoContainer}>
+          <Text style={styles.profileName}>MACENA</Text>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text style={[styles.mostrartext ]}>
+              Mostrar credenciales
+              <FontAwesome name="arrow-right" style={styles.icon} />
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
+      <Modal
+        visible={modalVisible}
+        animationType={"slide"}
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modal}>
+          <View style={styles.modalHeader}>
+          <Image source={require("../assets/images/macena.png")} style={styles.productoRedondoCred}/>
+          <Text style={styles.credentialsTexts}>Credenciales de Macena</Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <FontAwesome name="times" style={styles.modalCloseIcon} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.credentialsContainer}>
+          <Text style={styles.credentialsText}>Nombre:</Text>
+         <Text style={styles.credentialsDescription}>Macena S.A</Text>
+           <Text style={styles.credentialsText}>Email:</Text>
+          <Text style={styles.credentialsDescription}>macena@gmail.com</Text>
+         <Text style={styles.credentialsText}>Teléfono:</Text>
+         <Text style={styles.credentialsDescription}>0351 638-7800</Text>
+          <Text style={styles.credentialsText}>Provincia:</Text>
+          <Text style={styles.credentialsDescription}>Córdoba</Text>
+          <Text style={styles.credentialsText}>Dirección:</Text>
+          <Text style={styles.credentialsDescription}>N. Rodríguez Peña 2439, X5001FIO Córdoba</Text>
     </View>
-    </ScrollView>
-  )
+        </View>
+      </Modal>        
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingTop: 30,
+    flex: 0,
+    backgroundColor: 'white',
+    margin: 10,
+    padding: 20,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  logo: {
-    width: "100%",
-    height: 150,
-    resizeMode: "contain",
-    marginBottom: 10,
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  profileName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  profileInfoContainer: {
+    flex: 0,
+    marginLeft: 20,
+  },
+  button: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    marginTop: 0,
+  },
+  productoRedondo: {
+    backgroundColor: 'rgb(232,228,234)',
+    resizeMode: 'center',
+    width: 50,
+    height: 50,
+    borderRadius: 500,
+    borderColor: '#020202',
+    borderWidth: 3,
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 0,
   },
-  textContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+  mostrartext: {
+    textDecorationLine: 'underline',
+    textDecorationColor: 'blue',
+    fontSize: 16,
+    marginTop: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  credentialsContainer: {
+    backgroundColor: 'lightgray',
+    padding: 20,
+    borderRadius: 10,
     marginTop: 10,
   },
-  buttonContainer: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    marginTop: 16,
-    marginBottom: 32,
-    flexDirection: "row-reverse",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+  credentialsTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    marginBottom: 10,
   },
-  buttonText: {
-    fontWeight: "bold",
-    textDecorationLine: "underline",
-    fontSize: 18,
-    color: "#fff",
-    textAlign: "center",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-
+  productoRedondoCred: {
+    backgroundColor: '#020202',
+    resizeMode: 'center',
+    width: 130,
+    height: 130,
+    borderRadius: 500,
+    borderColor: '#020202',
+    borderWidth: 3,
+    marginTop: 50,
+    marginLeft: 50,
   },
-  subTitle: {
-    textDecorationLine: "underline",
-    fontWeight: "bold",
+  credentialsText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#000',
+    textTransform: 'uppercase',
+    marginTop: 10,
   },
-  blueText: {
-    color: "blue",
+  credentialsTexts: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'auto',
+    color: '#000',
+    textTransform: 'uppercase',
+    marginTop: 50,
+    marginRight: 50,
   },
-  logo: {
-    width: "100%",
-    height: 150,
-    resizeMode: "contain",
-    marginBottom: 5,
+  modal: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: '200',
+  },
+  modalCloseIcon: {
+    fontSize: 30,
+    color: 'gray',
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  credentialsDescription: {
+    fontSize: 20,
+    color: 'black',
+    marginBottom: 10,
+    textAlign: 'center',
   },
 });
