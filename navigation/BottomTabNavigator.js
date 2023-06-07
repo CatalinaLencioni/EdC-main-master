@@ -7,6 +7,7 @@ import Colors from "../constants/Colors";
 import PerfilScreen from "../screens/PerfilScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import TabOneScreen from "../screens/TabOneScreen";
+import PregFrecScreen from "../screens/PregFrecScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -28,12 +29,12 @@ export default function BottomTabNavigator() {
         }}/>
 
       <BottomTab.Screen
-        name="Noticias"
-        component={TabTwoNavigator}
+        name="Preguntas Frecuentes"
+        component={PregFrecScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="newspaper" color={color} />
+            <TabBarIcon name="help-circle" color={color} />
           ),        
 
         }}
@@ -76,9 +77,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="Noticias"
+        name="Preguntas Frecuentes"
         component={TabTwoScreen}
-        options={{ headerTitle: "Noticias" }}
+        options={{ headerTitle: "Preguntas Frecuentes" }}
       />
     </TabTwoStack.Navigator>
   );

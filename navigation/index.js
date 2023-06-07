@@ -76,7 +76,7 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="InstructivoScreen"
-        component={InsValidScreen}
+        component={InstructivoScreen}
         options={{
           headerShown: true,
           title: "InstructivoScreen ",
@@ -85,7 +85,7 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="BeneficiarioProvScreen"
-        component={InsValidScreen}
+        component={BeneficiarioProvScreen}
         options={{
           headerShown: true,
           title: "BeneficiarioProvScreen ",
@@ -94,7 +94,7 @@ function RootNavigator() {
       />
       <Stack.Screen
         name="RegimenScreen"
-        component={InsValidScreen}
+        component={RegimenScreen}
         options={{
           headerShown: true,
           title: "RegimenScreen ",

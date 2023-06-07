@@ -1,177 +1,159 @@
-  import {StyleSheet, Text, TouchableOpacity, View, Image, Modal} from "react-native";
-  import { MaterialIcons } from "@expo/vector-icons";
-  import React, { useState } from "react";
-  import { ScrollView } from "react-native-gesture-handler";
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
 
-  export default function InsValidScreen({ navigation }) {
-    const [isModalVisible, setIsModalVisible] = useState(false);
+const CollapsibleComponent = () => {
+  const [isCollapsed1, setCollapsed1] = useState(true);
+  const [isCollapsed2, setCollapsed2] = useState(true);
+  const [isCollapsed3, setCollapsed3] = useState(true);
+  const [isCollapsed4, setCollapsed4] = useState(true);
 
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Image
-              style={styles.headerImage}
-              source={require("../assets/images/ins.png")}
-            />
-          </View>
-          <View style={styles.content}>
-            <Text style={styles.title}>Instructivos</Text>
-            <TouchableOpacity
-              style={styles.rectangle}
-              onPress={() => setIsModalVisible(true)}
-            >
-              <View style={styles.rectangleContent}>
-                <Text style={styles.rectangleTitle}>
-                  Régimen de beneficiarios EdC
-                </Text>
-                <MaterialIcons name="chevron-right" size={24} color="#000" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <Modal
-            visible={isModalVisible}
-            onRequestClose={() => setIsModalVisible(false)}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalHeader}>
-                <Image
-                  source={require("../assets/images/ins.png")}
-                  style={styles.modalHeaderImage}
-                />
-                <View style={styles.modalTitleContainer}>
-                  <Text style={styles.modalTitle}>
-                    {" "}  Beneficiario Provisorio
-                  </Text>
-                </View>
-              </View>
-              <Text style={styles.modalText}>
-                {" "}
-                En esta sección se detalla el procedimiento para registrarse en
-                el Registro de Beneficiarios del Régimen de Promoción de la
-                Economía del Conocimiento de la Provincia de Córdoba como
-                "Beneficiario Provisorio". Las empresas interesadas deben haber
-                solicitado su inscripción en el Registro Nacional de
-                Beneficiarios del Régimen de Promoción de la Economía del
-                Conocimiento y cumplir con los requisitos formales previstos en
-                las normativas nacionales vigentes. Además, se deben completar
-                el formulario de inscripción del RECOR y acreditar el
-                cumplimiento de los requisitos formales previstos por la
-                Subsecretaría de Economía del Conocimiento. La calidad de
-                "Beneficiario Provisorio" se convierte en "definitiva" cuando la
-                empresa obtiene y acredita el acto administrativo
-                correspondiente. Si no se obtiene en un plazo de 18 meses, se
-                producirá la baja automática del beneficiario.
-              </Text>
-              <TouchableOpacity
-                style={styles.modalButton}
-                onPress={() => setIsModalVisible(false)}
-              >
-                <Text style={styles.modalButtonText}>Cerrar</Text>
-              </TouchableOpacity>
-            </View>
-          </Modal>
+  const toggleCollapsible1 = () => {
+    setCollapsed1(!isCollapsed1);
+  };
+
+  const toggleCollapsible2 = () => {
+    setCollapsed2(!isCollapsed2);
+  };
+
+  const toggleCollapsible3 = () => {
+    setCollapsed3(!isCollapsed3);
+  };
+
+  const toggleCollapsible4 = () => {
+    setCollapsed4(!isCollapsed4);
+  };
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.header} onPress={toggleCollapsible1}>
+        <Text style={styles.headerText}>Collapsible 1</Text>
+        <Ionicons name={isCollapsed1 ? 'ios-arrow-down' : 'ios-arrow-up'} size={24} color="black" />
+      </TouchableOpacity>
+      {!isCollapsed1 && (
+        <View style={styles.content}>
+          <Text>Content for Collapsible 1</Text>
         </View>
-        <View style={styles.footer}>
-          <Image
-            style={styles.footerImage}
-            source={require("../assets/images/banner.png")}
-          />
-        </View>
-      </ScrollView>
-    );
-  }
+      )}
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 20,
-    },
-    title: {
-      fontSize: 20,
-      fontWeight: "bold",
-      marginBottom: 20,
-    },
-    header: {
-      flex: 1,
-      width: "100%",
-      justifyContent: "flex-end",
-      alignItems: "center",
-    },
-    headerImage: {
-      width: "110%",
-      height: 160,
-      resizeMode: "contain",
-      marginBottom: 180,
-    },
-    wrapper: {
-      flexDirection: "row",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      flex: 1,
-      width: "100%",
-      marginTop: 200, 
-    },
-    rectangle: {
-      backgroundColor: "#e5e5e5",
-      width: "100%",
-      height: 55,
-      borderRadius: 10,
-      margin: "1%",
-      padding: 10,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 10,
-    },
-    rectangleTitle: {
-      fontSize: 16,
-      fontWeight: "bold",
-      textAlign: "center",
-      width: "90%",
-    },
-    footer: {
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      right: 15,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    footerImage: {
-      width: "110%",
-      height: 100,
-    },
-    modalContainer: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      padding: 20,
-    },
-    modalHeader: {
-      flexDirection: "column",
-      alignItems: "center",
-      marginBottom: 20,
-    },
-    modalHeaderImage: {
-      width: 400,
-      height: 160,
-      marginBottom: 10,
-    },
-    modalTitle: {
-      fontSize: 18,
-      fontWeight: "bold",
-      maxWidth: "60%",
-      marginRight: 160,
-    },
-    modalButton: {
-      backgroundColor: "blue",
-      padding: 15,
-      borderRadius: 10,
-      marginTop: 20,
-    },
-  });
+      <TouchableOpacity style={styles.header} onPress={toggleCollapsible2}>
+        <Text style={styles.headerText}>Collapsible 2</Text>
+        <Ionicons name={isCollapsed2 ? 'ios-arrow-down' : 'ios-arrow-up'} size={24} color="black" />
+      </TouchableOpacity>
+      {!isCollapsed2 && (
+        <View style={styles.content}>
+          <Text>Content for Collapsible 2</Text>
+        </View>
+      )}
+
+      <TouchableOpacity style={styles.header} onPress={toggleCollapsible3}>
+        <Text style={styles.headerText}>Collapsible 3</Text>
+        <Ionicons name={isCollapsed3 ? 'ios-arrow-down' : 'ios-arrow-up'} size={24} color="black" />
+      </TouchableOpacity>
+      {!isCollapsed3 && (
+        <View style={styles.content}>
+          <Text>Content for Collapsible 3</Text>
+        </View>
+      )}
+
+      <TouchableOpacity style={styles.header} onPress={toggleCollapsible4}>
+        <Text style={styles.headerText}>Collapsible 4</Text>
+        <Ionicons name={isCollapsed4 ? 'ios-arrow-down' : 'ios-arrow-up'} size={24} color="black" />
+      </TouchableOpacity>
+      {!isCollapsed4 && (
+        <View style={styles.content}>
+          <Text>Content for Collapsible 4</Text>
+        </View>
+      )}
+    </View>
+  );
+};
+
+export default function InstructivosScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Image
+          style={styles.headerImage}
+          source={require("../assets/images/ins.png")}
+        />
+      </View>
+      <Text style={styles.title}>Instructivos</Text>
+      <CollapsibleComponent />
+      <View style={styles.footer}>
+        <Image
+          style={styles.footerImage}
+          source={require("../assets/images/banner.png")}
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 160,
+    marginBottom: -100,
+  },
+  headerImage: {
+    width: "100%",
+    height: 150,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
+  headerText: {
+    fontSize: 30, // Ajusta el tamaño de fuente según tus necesidades
+    marginLeft: 16, // Ajusta el margen izquierdo según tus necesidades
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "left",
+    borderBottomWidth: 1, // Elimina esta línea
+    borderBottomColor: "#ccc", // Elimina esta línea
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  footerImage: {
+    width: '100%',
+    height: 100,
+    resizeMode: 'contain',
+  },
+  // Styles for CollapsibleComponent
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    // borderBottomWidth: 1, // Elimina esta línea
+    // borderBottomColor: '#ccc', // Elimina esta línea
+  },
+  headerText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    flex: 1,
+  },
+  content: {
+    paddingVertical: 8,
+  },
+});

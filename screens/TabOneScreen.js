@@ -58,12 +58,7 @@ export default function TabOneScreen() {
           name: "Programa Empleo",
           icon: "clipboard",
           onPress: () => navigation.navigate("InsValidScreen"),
-        },
-        {
-          name: "Preguntas Frecuentes",
-          icon: "help-circle",
-          onPress: () => navigation.navigate("PregFrecScreen"),
-        },
+        }
       ],
     },
   ];
