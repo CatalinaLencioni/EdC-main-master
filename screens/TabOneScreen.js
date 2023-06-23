@@ -4,6 +4,8 @@ import { Text, View } from "../components/Themed";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import { Alert } from 'react-native';
+
 
 export default function TabOneScreen() {
   const navigation = useNavigation();
@@ -29,11 +31,26 @@ export default function TabOneScreen() {
       name: "Beneficios",
       icon: "card",
       onPress: () => navigation.navigate("MarcoLegalScreen"),
-    },
+    },    
     {
-      name: "Noticias",
-      icon: "newspaper",
-      onPress: () => navigation.navigate("InsValidScreen"),
+      name: "Cerrar Sesión",
+      icon: "exit-outline",
+      onPress: () => {
+        Alert.alert(
+          "Cerrar Sesión",
+          "¿Estás seguro de que deseas cerrar sesión?",
+          [
+            {
+              text: "Cancelar",
+              style: "cancel"
+            },
+            {
+              text: "Aceptar",
+              onPress: () => navigation.navigate("TabTwoScreen")
+            }
+          ]
+        );
+      }
     },
     {
       name: "Instructivos y PDFs",
@@ -190,5 +207,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignSelf: "center"
   },  
-  
 });

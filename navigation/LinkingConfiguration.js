@@ -26,11 +26,6 @@ export default {
               PregFrecScreen: "three",
             },
           },
-          TabTwo: {
-            screens: {
-              Login: "three",
-            },
-          },
         },
       },
       NotFound: "*",

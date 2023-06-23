@@ -10,9 +10,9 @@ import MarcoLegalScreen from "../screens/MarcoLegalScreen";
 import BeneficiosScreen from "../screens/BeneficiosScreen";
 import InstructivoScreen from "../screens/InstructivoScreen";
 import BeneficiarioProvScreen from "../screens/BeneficiarioProvScreen";
-import RegimenScreen from "../screens/RegimenScreen";
 import InsValidScreen from "../screens/InsValidScreen";
 import PregFrecScreen from "../screens/PregFrecScreen";
+import TabTwoScreen from "../screens/TabTwoScreen";
 
 export default function Navigation({ colorScheme }) {
   return (
@@ -25,8 +25,6 @@ export default function Navigation({ colorScheme }) {
   );
 }
 
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator();
 
 function RootNavigator() {
@@ -88,16 +86,7 @@ function RootNavigator() {
         component={BeneficiarioProvScreen}
         options={{
           headerShown: true,
-          title: "BeneficiarioProvScreen ",
-          headerBackTitle: "Volver",
-        }}
-      />
-      <Stack.Screen
-        name="RegimenScreen"
-        component={RegimenScreen}
-        options={{
-          headerShown: true,
-          title: "RegimenScreen ",
+          title: "BeneficiarioProvScreen",
           headerBackTitle: "Volver",
         }}
       />
@@ -106,7 +95,7 @@ function RootNavigator() {
         component={InsValidScreen}
         options={{
           headerShown: true,
-          title: "InsValidScreen ",
+          title: "",
           headerBackTitle: "Volver",
         }}
       />
@@ -116,6 +105,15 @@ function RootNavigator() {
         options={{
           headerShown: true,
           title: "Preguntas Frecuentes ",
+          headerBackTitle: "Volver",
+        }}
+      />
+      <Stack.Screen
+        name="TabTwoScreen"
+        component={TabTwoScreen}
+        options={{
+          headerShown: true,
+          title: "Menú",
           headerBackTitle: "Volver",
         }}
       />

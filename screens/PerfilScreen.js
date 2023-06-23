@@ -3,23 +3,22 @@ import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, Modal } from
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from 'react-native-vector-icons';
 
-
 const NOTIFICATIONS = [
-  { id: '1', title: ' Impuesto sobre los Ingresos Brutos', message: 'Exención por 10 años del 100% ', date: '2023-04-25' },
-  {id:  '2', title: ' Impuesto de Sellos', message: 'Exención por 10 años del 100% ', date: '2023-04-24'},
-  { id: '3', title: 'Promoción de Empleo', message: 'Casos específicos', date: '2023-04-30'},
+  { id: '1', title: 'Impuesto sobre los Ingresos Brutos', message: 'Exención por 10 años del 100%', date: '2023-04-25' },
+  { id: '2', title: 'Impuesto de Sellos', message: 'Exención por 10 años del 100%', date: '2023-04-24' },
+  { id: '3', title: 'Promoción de Empleo', message: 'Casos específicos', date: '2023-04-30' },
 ];
 
 const NotificationItem = ({ id, title, message, date, onPressClose }) => {
-  return (  
+  return (
     <View style={styles.notificationContainer}>
       <View style={styles.column}>
         <View style={styles.titleContainer}>
           <Text style={styles.notificationTitle}>{title}</Text>
           <TouchableOpacity onPress={onPressClose} style={styles.alertIconContainer}>
-        <Ionicons name="ios-warning" size={20} color="#666" style={styles.alertIcon} />
-        </TouchableOpacity>
-        </View> 
+            <Ionicons name="ios-warning" size={20} color="#666" style={styles.alertIcon} />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.notificationMessage}>{message}</Text>
       </View>
       <View style={styles.column}>
@@ -30,12 +29,11 @@ const NotificationItem = ({ id, title, message, date, onPressClose }) => {
       </View>
     </View>
   );
-}
-
+};
 
 const NotificationsScreen = () => {
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
-  const [showContainer, setShowContainer] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleRemoveNotification = (id) => {
     setNotifications((currentNotifications) =>
@@ -43,59 +41,64 @@ const NotificationsScreen = () => {
     );
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "transparent" }}>
- <View style={{ flex: 1 }}>
-  <View style={[styles.container, { width: 386, height: 150, borderWidth: 3, borderColor: 'white', backgroundColor: 'white', marginTop: 10, borderRadius: 40 }]}>
-    <Image source={require("../assets/images/macena.png")} style={styles.profilePicture}/>
-    <Text style={styles.companyName}>Macena</Text>
-    <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.showContainer}>
-    <Text style={styles.showText}>Mostrar Credenciales</Text>
-    <Ionicons name="arrow-forward-outline" size={20} color="#0A387D" style={styles.arrowIcon} />
-    </TouchableOpacity>
-    <Modal visible={modalVisible} animationType={"slide"} onRequestClose={() => setModalVisible(false)}>
-        <View style={styles.modal}>
-          <View style={styles.modalHeader}>
-          <Image source={require("../assets/images/macena.png")} style={styles.productoRedondoCred}/>
-          <Text style={styles.credentialsTextsM}>Credenciales de Macena</Text>
-            <TouchableOpacity onPress={() => setModalVisible(false)}>
-              <FontAwesome name="" style={styles.modalCloseIcon} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.credentialsContainer}>
-          <Text style={styles.credentialsText}>Nombre:</Text>
-         <Text style={styles.credentialsDescription}>Macena S.A</Text>
-           <Text style={styles.credentialsText}>Email:</Text>
-          <Text style={styles.credentialsDescription}>macena@gmail.com</Text>
-         <Text style={styles.credentialsText}>Teléfono:</Text>
-         <Text style={styles.credentialsDescription}>0351 638-7800</Text>
-          <Text style={styles.credentialsText}>Provincia:</Text>
-          <Text style={styles.credentialsDescription}>Córdoba</Text>
-          <Text style={styles.credentialsText}>Dirección:</Text>
-          <Text style={styles.credentialsDescription}>N. Rodríguez Peña 2439, X5001FIO Córdoba</Text>
-    </View>
+    <View style={{ flex: 1, backgroundColor: 'transparent' }}>
+      <View style={{ flex: 1 }}>
+        <View style={[styles.container, { width: 386, height: 150, borderWidth: 3, borderColor: 'white', backgroundColor: 'white', marginTop: 10, borderRadius: 40 }]}>
+          <Image source={require('../assets/images/macena.png')} style={styles.profilePicture} />
+          <Text style={styles.companyName}>Macena</Text>
+          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.showContainer}>
+            <Text style={styles.showText}>Mostrar Credenciales</Text>
+            <Ionicons name="arrow-forward-outline" size={20} color="#0A387D" style={styles.arrowIcon} />
+          </TouchableOpacity>
+          <Modal visible={modalVisible} animationType="slide" onRequestClose={handleCloseModal}>
+            <View style={styles.modal}>
+              <View style={styles.modalHeader}>
+                <Image source={require('../assets/images/macena.png')} style={styles.productoRedondoCred} />
+                <Text style={styles.credentialsTextsM}>Credenciales de Macena</Text>
+                <TouchableOpacity onPress={handleCloseModal}>
+                  <FontAwesome name="close" style={styles.modalCloseIcon} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.credentialsContainer}>
+                <Text style={styles.credentialsText}>Nombre: </Text>
+                <Text style={styles.credentialsDescription}>Macena S.A</Text>
+                <Text style={styles.credentialsText}>Email:</Text>
+                <Text style={styles.credentialsDescription}>macena@gmail.com</Text>
+                <Text style={styles.credentialsText}>Teléfono:</Text>
+                <Text style={styles.credentialsDescription}>0351 638-7800</Text>
+                <Text style={styles.credentialsText}>Provincia:</Text>
+                <Text style={styles.credentialsDescription}>Córdoba</Text>
+                <Text style={styles.credentialsText}>Dirección:</Text>
+                <Text style={styles.credentialsDescription}>N. Rodríguez Peña 2439, X5001FIO Córdoba</Text>
+              </View>
+            </View>
+          </Modal>
         </View>
-      </Modal> 
-   </View>
-  <Text style={styles.notificationTitleN}>Notificaciones</Text>
-      <FlatList data={notifications} keyExtractor={(item) => item.id} renderItem={({ item }) => (
-         <NotificationItem id={item.id} title={item.title}  message={item.message} date={item.date} onPressClose={() => handleRemoveNotification(item.id)} />
-        )}
-      />
-    </View>  
+        <Text style={styles.notificationTitleN}>Notificaciones</Text>
+        <FlatList
+          data={notifications}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <NotificationItem
+              id={item.id}
+              title={item.title}
+              message={item.message}
+              date={item.date}
+              onPressClose={() => handleRemoveNotification(item.id)}
+            />
+          )}
+        />
+      </View>
     </View>
-  );  
+  );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   notificationContainer: {
     backgroundColor: 'white',
     borderWidth: 1,
@@ -167,7 +170,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     marginTop: 15,
-    marginLeft: 120, 
+    marginLeft: 120,
   },
   notificationMessage: {
     fontSize: 14,
@@ -228,7 +231,8 @@ const styles = StyleSheet.create({
   profileInfoContainer: {
     flex: 0,
     marginLeft: 10,
-  }, credentialsContainer: {
+  },
+  credentialsContainer: {
     backgroundColor: 'lightgray',
     padding: 20,
     borderRadius: 10,
@@ -284,9 +288,9 @@ const styles = StyleSheet.create({
     color: 'gray',
     position: 'absolute',
     marginTop: -230,
-    marginLeft: 350
-   },
-   credentialsTextsM:{
+    marginLeft: 350,
+  },
+  credentialsTextsM: {
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'auto',
@@ -294,8 +298,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginTop: 50,
     textAlign: 'center',
-   },
-
+  },
 });
 
 export default NotificationsScreen;

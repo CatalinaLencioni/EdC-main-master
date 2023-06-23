@@ -5,7 +5,6 @@ import { useColorScheme } from "react-native";
 
 import Colors from "../constants/Colors";
 import PerfilScreen from "../screens/PerfilScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import PregFrecScreen from "../screens/PregFrecScreen";
 
@@ -68,20 +67,6 @@ function TabOneNavigator() {
         options={{ headerTitle: "Inicio" }}
       />
     </TabOneStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="Preguntas Frecuentes"
-        component={TabTwoScreen}
-        options={{ headerTitle: "Preguntas Frecuentes" }}
-      />
-    </TabTwoStack.Navigator>
   );
 }
 
