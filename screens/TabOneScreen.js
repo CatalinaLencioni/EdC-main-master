@@ -1,21 +1,42 @@
-import { StyleSheet, TouchableOpacity, Image } from "react-native";
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
+import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity, Modal, View, Text, TextInput, Button, Alert, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { Alert } from 'react-native';
 
 
 export default function TabOneScreen() {
   const navigation = useNavigation();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = () => {
+    if (email === "Macena" && password === "macena123") {
+      setIsModalVisible(false);
+      setError("");
+      navigation.navigate("PerfilScreen");
+      clearFields(); // Limpia los campos de usuario y contraseña
+    } else {
+      setError("Credenciales inválidas");
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const clearFields = () => {
+    setEmail("");
+    setPassword("");
+  };
 
   const menuOptions = [
     {
       name: "Perfil",
       icon: "person-sharp",
-      onPress: () => navigation.navigate("PerfilScreen"),
+      onPress: () => openModal(),
     },
     {
       name: "Empresas EDC",
@@ -31,7 +52,7 @@ export default function TabOneScreen() {
       name: "Beneficios",
       icon: "card",
       onPress: () => navigation.navigate("MarcoLegalScreen"),
-    },    
+    },
     {
       name: "Cerrar Sesión",
       icon: "exit-outline",
@@ -88,10 +109,42 @@ export default function TabOneScreen() {
       setIsSubMenuOpen(!isSubMenuOpen);
     }
   };
+  
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
 
   return (
     <View style={styles.container}>
       <Image source={require("../assets/images/landing.png")} style={styles.logo} />
+
+      <Modal visible={isModalVisible} animationType="slide" transparent={false}>
+  <View style={styles.modalContainer}>
+    <Text style={styles.modalTitle}>Inicio de Sesión</Text>
+    <TextInput
+      placeholder="Correo Electrónico"
+      onChangeText={(text) => setEmail(text)}
+      value={email}
+      style={styles.input}
+    />
+    <TextInput
+      placeholder="Contraseña"
+      onChangeText={(text) => setPassword(text)}
+      value={password}
+      secureTextEntry
+      style={styles.input}
+    />
+    {error !== "" && <Text style={styles.errorText}>{error}</Text>}
+    <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+      <Text style={styles.buttonText}>Iniciar Sesión</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={closeModal} style={styles.closeIconContainer}>
+      <Ionicons name="close" size={24} color="black" style={styles.modalCloseIcon} />
+    </TouchableOpacity>
+  </View>
+</Modal>
+
+
       {menuOptions.map((item, index) => (
         <TouchableOpacity
           key={index}
@@ -103,7 +156,7 @@ export default function TabOneScreen() {
               size={24}
               color="black"
               style={styles.menuIcon}
-              marginLeft="30"
+              marginLeft={30}
             />
             <Text style={styles.menuItemText}>{item.name}</Text>
             {item.subMenu && (
@@ -130,7 +183,7 @@ export default function TabOneScreen() {
                     name={item.icon}
                     size={24}
                     color="black"
-                    style={styles.menuIcon}            
+                    style={styles.menuIcon}
                   />
                   <Text style={styles.subMenuItemText}>{item.name}</Text>
                 </View>
@@ -138,8 +191,6 @@ export default function TabOneScreen() {
             ))}
         </View>
       )}
-
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
     </View>
   );
 }
@@ -151,7 +202,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "column",
-    marginLeft: 30, // agregando margen en el lado derecho del 
+    marginLeft: 20,
   },
   header: {
     flexDirection: "row",
@@ -206,5 +257,55 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginBottom: 20,
     alignSelf: "center"
-  },  
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+  },
+  loginButton: {
+    backgroundColor: 'blue',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  closeIconContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  modalCloseIcon: {
+    marginRight: 10,
+  },
 });
