@@ -17,7 +17,7 @@ export default function TabOneScreen() {
       setIsModalVisible(false);
       setError("");
       navigation.navigate("PerfilScreen");
-      clearFields(); // Limpia los campos de usuario y contraseña
+      clearFields(); 
     } else {
       setError("Credenciales inválidas");
     }
@@ -67,7 +67,9 @@ export default function TabOneScreen() {
             },
             {
               text: "Aceptar",
-              onPress: () => navigation.navigate("TabTwoScreen")
+              onPress: () => {
+                // Aquí puedes agregar la lógica para cerrar el modal
+              }
             }
           ]
         );
@@ -119,21 +121,22 @@ export default function TabOneScreen() {
       <Image source={require("../assets/images/landing.png")} style={styles.logo} />
 
       <Modal visible={isModalVisible} animationType="slide" transparent={false}>
-  <View style={styles.modalContainer}>
+  <View style={[styles.modalContainer, { backgroundColor: 'white' }]}>
     <Text style={styles.modalTitle}>Inicio de Sesión</Text>
     <TextInput
-      placeholder="Correo Electrónico"
-      onChangeText={(text) => setEmail(text)}
-      value={email}
-      style={styles.input}
-    />
-    <TextInput
-      placeholder="Contraseña"
-      onChangeText={(text) => setPassword(text)}
-      value={password}
-      secureTextEntry
-      style={styles.input}
-    />
+  placeholder="Correo Electrónico"
+  onChangeText={(text) => setEmail(text)}
+  value={email}
+  style={[styles.input, {  borderWidth: 1, borderColor: 'gray' }]}
+/>
+
+<TextInput
+  placeholder="Contraseña"
+  onChangeText={(text) => setPassword(text)}
+  value={password}
+  secureTextEntry
+  style={[styles.input, { borderWidth: 1, borderColor: 'gray' }]}
+/>
     {error !== "" && <Text style={styles.errorText}>{error}</Text>}
     <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
       <Text style={styles.buttonText}>Iniciar Sesión</Text>
@@ -143,6 +146,7 @@ export default function TabOneScreen() {
     </TouchableOpacity>
   </View>
 </Modal>
+
 
 
       {menuOptions.map((item, index) => (

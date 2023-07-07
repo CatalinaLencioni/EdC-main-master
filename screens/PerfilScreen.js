@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'white',
     padding: 16,
   },
   profilePicture: {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     marginTop: 15,
-    marginLeft: 120,
+    marginLeft: 10,
   },
   notificationMessage: {
     fontSize: 14,
@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     flexDirection: 'row',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 20,
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
   profileInfoContainer: {
     flex: 0,
     marginLeft: 10,
+    backgroundColor: 'white',
   },
   credentialsContainer: {
     backgroundColor: 'lightgray',

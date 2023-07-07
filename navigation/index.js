@@ -113,7 +113,7 @@ function RootNavigator() {
         component={TabTwoScreen}
         options={{
           headerShown: true,
-          title: "Menú",
+          title: "",
           headerBackTitle: "Volver",
         }}
       />

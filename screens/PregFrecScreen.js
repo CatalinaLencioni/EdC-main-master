@@ -12,6 +12,7 @@ function ContainerWithCloseButton({ navigation }) {
     const url = 'https://mincyt.cba.gov.ar/wp-content/uploads/2022/11/PREGUNTAS-FRECUENTES-RECOR-1.pdf'; // Cambia esta URL por el enlace que desees abrir
     Linking.openURL(url);
   };
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
@@ -32,10 +33,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: 'white', // Fondo blanco
   },
   closeButton: {
     position: 'absolute',
-    top: 10,
+    top: 5,
     right: 10,
     padding: 10,
   },
@@ -52,11 +54,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

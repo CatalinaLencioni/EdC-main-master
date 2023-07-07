@@ -100,10 +100,12 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   logo: {
-    width: "100%",
+    width: "110%",
     height: 150,
     resizeMode: "contain",
     marginBottom: 10,
+    marginTop: -10,
+    alignContent: "flex-start",
   },
   title: {
     fontSize: 24,

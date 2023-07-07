@@ -14,12 +14,12 @@ const images = [
 ];
 
 const data = [
-  { name: 'Ley 7.22', url: 'https://www.example.com/download1' },
-  { name: 'Decreto Reglamentario', url: 'https://www.example.com/download2' },
-  { name: 'Resolución 2/2021', url: 'https://www.example.com/download3' },
-  { name: 'Ley 10.649', url: 'https://www.example.com/download4' },
-  { name: 'Resolución 8/22', url: 'https://www.example.com/download5' },
-  { name: 'Promoción de Empleo', url: 'https://www.example.com/download6' },
+  { name: 'Ley 7.22', url: 'http://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2020/12/1_Secc_241220.pdf' },
+  { name: 'Decreto Reglamentario', url: 'https://mincyt.cba.gov.ar/wp-content/uploads/2021/03/Decreto-193-21-reglamento-ley-10649-1.pdf' },
+  { name: 'Resolución 2/2021', url: 'https://mincyt.cba.gov.ar/wp-content/uploads/2022/02/1_Secc_090222.pdf' },
+  { name: 'Ley 10.649', url: 'https://mincyt.cba.gov.ar/wp-content/uploads/2022/02/Promulgaci%C3%B3n-Modificaci%C3%B3n-C%C3%B3digo-Tributario-Ley-10.649.pdf' },
+  { name: 'Resolución 8/22', url: 'https://mincyt.cba.gov.ar/wp-content/uploads/2021/04/1_Secc_130421.pdf' },
+  { name: 'Promoción de Empleo', url: 'https://mincyt.cba.gov.ar/wp-content/uploads/2021/02/Presentacion-consolidada-SSEC-ENERO-2021-con-links.pptx-1.pdf' },
 ];
 
 export default function DownloadCarousel() {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: 'white',
     alignItems: "center",
     justifyContent: "center",
   },
@@ -154,16 +154,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   headerImage: {
-    width: '105%',
-    height: 100,
-    resizeMode: 'cover',
-    marginBottom: 20,
+    width: "112%",
+    height: 120,
+    resizeMode: "cover",
+    marginBottom: 10,
+    alignSelf: "auto",
+    marginLeft: -20,
+    marginTop: -20, // Ajusta el valor negativo para mover la imagen más arriba
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   title2: {
     fontSize: 23,
