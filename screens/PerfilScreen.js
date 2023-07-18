@@ -1,15 +1,42 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, Modal } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, Modal, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from 'react-native-vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const NOTIFICATIONS = [
-  { id: '1', title: 'Impuesto sobre los Ingresos Brutos', message: 'Exención por 10 años del 100%', date: '2023-04-25' },
-  { id: '2', title: 'Impuesto de Sellos', message: 'Exención por 10 años del 100%', date: '2023-04-24' },
-  { id: '3', title: 'Promoción de Empleo', message: 'Casos específicos', date: '2023-04-30' },
+  {
+    id: '1',
+    title: 'Recordatorio de Revalidación',
+    message: 'Dispuesto por la Ley N° 10.649, su modificatoria 10.722  Capítulo III, punto 3.1 del Anexo I ',
+    date: 'Resolución 001/2023',
+    link: 'https://cidi.cba.gov.ar/portal-publico/',
+  },
+  {
+    id: '2',
+    title: 'Taller para empresas adheridas al Régimen',
+    message: 'Información relativa a la Ley de Economía del Conocimiento, funcionamiento, uso de sus beneficios, revalidación, auditorías y también te ayudaremos a resolver consultas e inquietudes.',
+    date: 'Miércoles 28/06 -  10:30 hs',
+    message: 'Presencial en Auditorio Ministerio de Ciencia y Tecnología, Álvarez de Arenales 230, Córdoba',
+    link: ' https://drive.google.com/drive/folders/1Z6ZBIKhB7Nz-gv3XksqjNoGqC5o133gX?usp=drive_link ', 
+   },
+  {
+    id: '3',
+    title: 'Programa de Promoción de Empleo - 2023',
+    message: 'En el siguiente link podrán encontrar el procedimiento y anexos para aplicar al Programa:',
+    date: 'Hasta el día 22/06 inclusive',
+    link: 'https://drive.google.com/file/d/1IuiF7e5bo-6IJmG5GSNMIapurJkAj3Ol/view',
+  },
 ];
 
-const NotificationItem = ({ id, title, message, date, onPressClose }) => {
+
+const NotificationItem = ({ id, title, message, date, onPressClose, link }) => {
+  const handleOpenLink = () => {
+    if (link) {
+      Linking.openURL(link);
+    }
+  };
+  
   return (
     <View style={styles.notificationContainer}>
       <View style={styles.column}>
@@ -26,6 +53,9 @@ const NotificationItem = ({ id, title, message, date, onPressClose }) => {
         <TouchableOpacity onPress={onPressClose} style={styles.closeIconContainer}>
           <Ionicons name="close-outline" size={20} color="#666" style={styles.closeIcon} />
         </TouchableOpacity>
+        <TouchableOpacity onPress={handleOpenLink}>
+      <Text style={styles.linkButton}>Ver más</Text>
+    </TouchableOpacity>
       </View>
     </View>
   );
@@ -46,57 +76,66 @@ const NotificationsScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'transparent' }}>
-      <View style={{ flex: 1 }}>
-        <View style={[styles.container, { width: 386, height: 150, borderWidth: 3, borderColor: 'white', backgroundColor: 'white', marginTop: 10, borderRadius: 40 }]}>
-          <Image source={require('../assets/images/macena.png')} style={styles.profilePicture} />
-          <Text style={styles.companyName}>Macena</Text>
-          <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.showContainer}>
-            <Text style={styles.showText}>Mostrar Credenciales</Text>
-            <Ionicons name="arrow-forward-outline" size={20} color="#0A387D" style={styles.arrowIcon} />
-          </TouchableOpacity>
-          <Modal visible={modalVisible} animationType="slide" onRequestClose={handleCloseModal}>
-            <View style={styles.modal}>
-              <View style={styles.modalHeader}>
-                <Image source={require('../assets/images/macena.png')} style={styles.productoRedondoCred} />
-                <Text style={styles.credentialsTextsM}>Credenciales de Macena</Text>
-                <TouchableOpacity onPress={handleCloseModal}>
-                  <FontAwesome name="close" style={styles.modalCloseIcon} />
-                </TouchableOpacity>
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={{ flex: 1 }}>
+          <View style={[styles.container, { width: 386, height: 150, borderWidth: 3, borderColor: 'white', backgroundColor: 'white', marginTop: 10, borderRadius: 40 }]}>
+            <Image source={require('../assets/images/macena.png')} style={styles.profilePicture} />
+            <Text style={styles.companyName}>Macena</Text>
+            <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.showContainer}>
+              <Text style={styles.showText}>Mostrar Credenciales</Text>
+              <Ionicons name="arrow-forward-outline" size={20} color="#0A387D" style={styles.arrowIcon} />
+            </TouchableOpacity>
+            <Modal visible={modalVisible} animationType="slide" onRequestClose={handleCloseModal}>
+              <View style={styles.modal}>
+                <View style={styles.modalHeader}>
+                  <Image source={require('../assets/images/macena.png')} style={styles.productoRedondoCred} />
+                  <Text style={styles.credentialsTextsM}>Credenciales de Macena</Text>
+                  <TouchableOpacity onPress={handleCloseModal}>
+                    <FontAwesome name="close" style={styles.modalCloseIcon} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.credentialsContainer}>
+                  <ScrollView>
+                    <Text style={styles.credentialsText}>Resolución:</Text>
+                    <Text style={styles.credentialsDescription}>001/2023</Text>
+                    <Text style={styles.credentialsText}>Fecha de resolución:</Text>
+                    <Text style={styles.credentialsDescription}>31/1/2023</Text>
+                    <Text style={styles.credentialsText}>Vencimiento beneficio:</Text>
+                    <Text style={styles.credentialsDescription}>31/1/2033</Text>
+                    <Text style={styles.credentialsText}>Próxima Validación Anual:</Text>
+                    <Text style={styles.credentialsDescription}>15/2/2024</Text>
+                    <Text style={styles.credentialsText}>Email:</Text>
+                    <Text style={styles.credentialsDescription}>macena@gmail.com</Text>
+                    <Text style={styles.credentialsText}>Teléfono:</Text>
+                    <Text style={styles.credentialsDescription}>0351 638-7800</Text>
+                    <Text style={styles.credentialsText}>Dirección:</Text>
+                    <Text style={styles.credentialsDescription}>N. Rodríguez Peña 2439, X5001FIO Córdoba</Text>
+                  </ScrollView>
+                </View>
               </View>
-              <View style={styles.credentialsContainer}>
-                <Text style={styles.credentialsText}>Nombre: </Text>
-                <Text style={styles.credentialsDescription}>Macena S.A</Text>
-                <Text style={styles.credentialsText}>Email:</Text>
-                <Text style={styles.credentialsDescription}>macena@gmail.com</Text>
-                <Text style={styles.credentialsText}>Teléfono:</Text>
-                <Text style={styles.credentialsDescription}>0351 638-7800</Text>
-                <Text style={styles.credentialsText}>Provincia:</Text>
-                <Text style={styles.credentialsDescription}>Córdoba</Text>
-                <Text style={styles.credentialsText}>Dirección:</Text>
-                <Text style={styles.credentialsDescription}>N. Rodríguez Peña 2439, X5001FIO Córdoba</Text>
-              </View>
-            </View>
-          </Modal>
+            </Modal>
+          </View>
+          <Text style={styles.notificationTitleN}>Notificaciones</Text>
+          <FlatList
+            data={notifications}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <NotificationItem
+                id={item.id}
+                title={item.title}
+                message={item.message}
+                date={item.date}
+                onPressClose={() => handleRemoveNotification(item.id)}
+              />
+            )}
+          />
         </View>
-        <Text style={styles.notificationTitleN}>Notificaciones</Text>
-        <FlatList
-          data={notifications}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <NotificationItem
-              id={item.id}
-              title={item.title}
-              message={item.message}
-              date={item.date}
-              onPressClose={() => handleRemoveNotification(item.id)}
-            />
-          )}
-        />
-      </View>
+      </ScrollView>
     </View>
   );
-};
+  
+              }  
 
 const styles = StyleSheet.create({
   notificationContainer: {
@@ -147,11 +186,12 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     backgroundColor: '#dcdcdc',
-    paddingHorizontal: 10,
+    paddingHorizontal: 30,
     paddingVertical: 5,
-    borderRadius: 5,
-    marginLeft: 25,
-    marginBottom: 5,
+    borderRadius: 1,
+    marginLeft: -15,
+    marginBottom: 1,
+    width: '110%', // Ajusta el valor para hacerlo más largo
   },
   notificationTitle: {
     fontSize: 16,
@@ -163,7 +203,7 @@ const styles = StyleSheet.create({
   },
   alertIcon: {
     top: -2,
-    right: 300,
+    right: 360,
   },
   notificationTitleN: {
     fontSize: 24,
@@ -177,8 +217,8 @@ const styles = StyleSheet.create({
   },
   closeIconContainer: {
     position: 'absolute',
-    top: -55,
-    right: -5,
+    top: -75,
+    right: -10,
   },
   notificationDate: {
     fontSize: 12,
@@ -255,7 +295,7 @@ const styles = StyleSheet.create({
     borderRadius: 500,
     borderColor: '#020202',
     borderWidth: 3,
-    marginTop: 50,
+    marginTop: 30,
     marginLeft: 120,
   },
   credentialsText: {
@@ -264,7 +304,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000',
     textTransform: 'uppercase',
-    marginTop: 10,
+    marginTop: 5,
   },
   credentialsTexts: {
     fontSize: 25,
@@ -278,7 +318,7 @@ const styles = StyleSheet.create({
   credentialsDescription: {
     fontSize: 20,
     color: 'black',
-    marginBottom: 10,
+    marginBottom: 5,
     textAlign: 'center',
   },
   modalTitle: {
@@ -289,7 +329,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'gray',
     position: 'absolute',
-    marginTop: -230,
+    marginTop: -210,
     marginLeft: 350,
   },
   credentialsTextsM: {
@@ -298,8 +338,12 @@ const styles = StyleSheet.create({
     textAlign: 'auto',
     color: '#000',
     textTransform: 'uppercase',
-    marginTop: 50,
+    marginTop: 20,
     textAlign: 'center',
+  },
+  linkButton: {
+    color: 'blue', 
+    textdecoration: 'underline',
   },
 });
 
